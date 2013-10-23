@@ -1,0 +1,15 @@
+[user]
+  name = Andrey Asyakin
+  email = andrey.asyakin@sms-online.com
+[color]
+    ui = auto
+[alias]
+  st = status
+  co = checkout
+  cm = commit
+  ci = commit
+  br = branch
+  df = diff
+  pom = push origin master
+  mersq = merge --squash
+  hyst  = log --pretty=format:'%h %ad | %Cgreen%d%Creset %s [%Creset%C(yellow)%an%Creset] %C(cyan)(%ar)%Creset' --graph --date=short

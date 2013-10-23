@@ -1,0 +1,11 @@
+:Linediff	linediff.txt	/*:Linediff*
+:LinediffReset	linediff.txt	/*:LinediffReset*
+g:linediff_indent	linediff.txt	/*g:linediff_indent*
+linediff	linediff.txt	/*linediff*
+linediff-commands	linediff.txt	/*linediff-commands*
+linediff-contents	linediff.txt	/*linediff-contents*
+linediff-installation	linediff.txt	/*linediff-installation*
+linediff-internals	linediff.txt	/*linediff-internals*
+linediff-issues	linediff.txt	/*linediff-issues*
+linediff-settings	linediff.txt	/*linediff-settings*
+linediff-usage	linediff.txt	/*linediff-usage*

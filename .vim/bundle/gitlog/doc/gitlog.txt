@@ -1,0 +1,284 @@
+*gitlog.txt*  For Vim version 7.3
+
+                                           
+        ,----.   ,--.  ,--.  ,--.                                          ~
+       '  .-./   `--',-'  '-.|  |    ,---.  ,---.                          ~
+       |  | .---.,--.'-.  .-'|  |   | .-. || .-. |                         ~
+       '  '--'  ||  |  |  |  |  '--.' '-' '' '-' '                         ~
+        `------' `--'  `--'  `-----' `---' .`-  /                          ~
+                                           `---'                           ~
+
+
+Author:	  Peter Antoine
+Date:     May 21, 2013
+Version:  2.1.2
+HomePage: https://github.com/PAntoine/vimgitlog
+
+
+For instructions on installing this file, type:
+>
+	:help add-local-help |add-local-help| inside Vim.
+<
+
+==============================================================================
+1. Contents                                       *gitlog* *gitlog-contents*
+
+    1. Contents...............................: |gitlog-contents|
+    2. Description............................: |gitlog-description|
+    3. Usage..................................: |gitlog-usage|
+    4. Git History Searching..................: |gitlog-searching|
+    5. Git History Tree.......................: |gitlog-tree|
+    6. Mapping GitLog Functions...............: |gitlog-mapping|
+    7. History................................: |gitlog-history|
+
+==============================================================================
+2. Description                                   *gitlog-description*
+
+This is a simple pure vim plugin that interfaces with git. It allows you
+to simply diff different version of the file in the main window. 
+
+This plugin tries to make access to the history the git stores easier to
+access.
+
+For details on the changes between versions see |gitlog-history|.
+
+==============================================================================
+3. Usage                                         *gitlog-usage*
+
+GitLog expects that you are in a sub-directory of the Git repository. When
+GitLog is activated it will check to see if there is a .git directory in the
+path. It will error if it cannot find one. It will use this Git repository
+for all operations.
+
+The only function that really should be called outside of GitLog is the toggle
+function 'GITLOG_ToggleWindows()' function. This will do (as really should be
+expected) toggle the GitLog windows.
+
+What it will display is a full-height window split into two. The top window
+will have the current branch name followed by the commits on that branch. The
+bottom left window will have all the local branches that are found in the 
+repository.
+
+The windows will look as follows:
+
+       -------------------------------------------------------------------
+      | branch: master     |                                              |
+      | * xxxxxxx commit th|                                              |
+      | * xxxxxxx commit th|                                              |
+      .                    .                                              .
+      .                    .                                              .
+      .                    .                                              .
+      |====================|                                              |
+      |  branch_1 xxxxxxx s|                                              |
+      |  branch_2 xxxxxxx s|                                              |
+      |* branch_3 xxxxxxx s|                                              |
+      |  branch_4 xxxxxxx s|                                              |
+      |                    |                                              |
+      |                    |                                              |
+       -------------------------------------------------------------------
+
+The '*' in the branch window represents the current branch that the repository
+is on. GitLog does not change this. Internally it may list other branches but
+it does not change the branch in the repository.
+
+GitLog, does not support many commands. If you press <cr> within the log window
+then the revision matching the commit will be diff'ed against the file that is
+in the main window. If 'c' is pressed then the file will be opened in a window
+alongside the file.
+
+In the branch window <cr> will change the log window to list the commits in
+that branch. It will NOT change the branch that the repository is in.
+
+==============================================================================
+4. Git History Searching								*gitlog-searching*
+
+GitLog has the ability to allow for searching the historical commits in the
+repository for text strings. GitLog allows for this to be done either on the
+current selected commit or, on a selection of commits.
+
+To search the repository in the Log Window 's' while the cursor is on a 
+single commit, or use the visual selection to select a group of commits then
+press 's'. GitLog will then present you with a prompt for the string that is
+to be searched for. Type in the string then press return and the following
+extra window will appear:
+
+       -------------------------------------------------------------------
+      | branch: master     |                                              |
+      | * xxxxxxx commit th|                                              |
+      | * xxxxxxx commit th|                                              |
+      .                    .                                              .
+      .                    .                                              .
+      .                    .                                              .
+      |====================|==============================================|
+      |  branch_1 xxxxxxx s|xxxxxxx:filname:nn:the line from the file     |
+      |  branch_2 xxxxxxx s|xxxxxxx:filname:nn:the line from the file     |
+      |* branch_3 xxxxxxx s|xxxxxxx:filname:nn:the line from the file     |
+      |  branch_4 xxxxxxx s|xxxxxxx:filname:nn:the line from the file     |
+      |                    |xxxxxxx:filname:nn:the line from the file     |
+      |                    |xxxxxxx:filname:nn:the line from the file     |
+       -------------------------------------------------------------------
+
+This extra window shows files that have been found in the search with the
+commits that they belong to. This window now works in the same way as the
+log window, that is if you press '<cr>' the file that is selected will be
+diff'ed against the same file in the current repository. If 'o' is selected
+then the selected revision of the file will be opened along side the current
+file in the window.
+
+The search windows can be pulled down with the rest by toggling the GitLog
+windows.
+
+==============================================================================
+5. Git History Tree								*gitlog-tree*
+
+GitLog has the ability to allow to display the selected commit in a tree format.
+This will be a tree of the current repository. It will open and select the 
+current file in the tree.
+
+It will let you navigate the tree either by walking up and down the tree, or
+by selecting another branch for the tree. The views can be toggled between the
+current file log and the tree vire.
+
+The tree window will have the following layout:
+
+       -------------------------------------------------------------------
+      | commit:xxxxxxx          |                                         |
+      | ... parent              |                                         |
+      | ▾ dir_1                 |                                         |
+      |  x file_1               |                                         |
+      |  - file_2               |                                         |
+      |  + file_3               |                                         |
+      |   ▸ Another Dir         |                                         |
+      |   file_3                |                                         |
+      | ▸ dir_2                 |                                         |
+      | ▸ dir_3                 |                                         |
+      | ▸ dir_4                 |                                         |
+      | ▾ dir_5                 |                                         |
+          ▾ dir_5_1             |                                         |
+            ▾ dir_5_2           |                                         |
+      | ▾ dir_6                 |                                         |
+      | ▸ dir_7                 |                                         |
+      |                         |                                         |
+      .                         .                                         .
+      .                         .                                         .
+      .                         .                                         .
+      |=========================|                                         |
+      |  master   xxxxxxx some t|                                         |
+      |  branch_1 xxxxxxx some t|                                         |
+      |  branch_2 xxxxxxx some t|                                         |
+      |  branch_3 xxxxxxx some t|                                         |
+      |* branch_4 xxxxxxx some t|                                         |
+      |  branch_5 xxxxxxx some t|                                         |
+      |  branch_6 xxxxxxx some t|                                         |
+       -------------------------------------------------------------------
+
+5.1. Tree Usage
+
+The tree can be navigated in the usual way, i.e. if a directory is closed
+hitting <cr> while on it will open the sub-directory tree. If open this will
+close it. 
+
+The tree recognises three different states for the files, local-only,
+version-only and changed. The behaviour of the tree view differs with each of
+these.
+
+local-only: marked + (or without unicode + )
+This file only exists in the local directory. The repo does not know about it
+(or in only in the index). When <cr> is pressed on this file it will open the
+local file.
+
+version-only: marked x (or without unicode x )
+This file only exists in the repository, there is no local file in the repository
+that matches this file. pressing return will open the version extracted from
+the current revision of the tree.
+
+changed: marked - (or without unicode - )
+This file exists in both the repository version and the local file system but
+the two do not match. Selecting <cr> will open the version from the repository.
+pressing 'l' will call the version from the local file system, and 'd' will
+diff the two files.
+
+Files that are the same will be unmarked and pressing <cr> will call the version
+that is residing on the local file system.
+
+5.2 Selecting a Commit Tree
+
+If you want to see the tree for any known commit. Goto the Log window select the
+branch that the commit is on, then find the commit that you are interested in.
+Goto the line it is on and press 't'. This will switch to the tree view at the
+specific branch that is required.
+
+5.3 Refreshing the tree
+
+If files change on the file-system the tree can be refreshed by pressing the 'r'
+key. This will cause the current directory under the cursor to be refreshed. It
+will close any directories that have been opened. 
+
+==============================================================================
+6. Mapping GitLog Functions                      	*gitlog-mapping*
+
+There is only one function that really required mapping and that is the
+toggle function. As this is a single operation function I would assume that
+you would attach it to a function key, so the following mapping would be useful
+>
+	:map <silent> <f7> :call GITLOG_FlipWindows()<cr>
+	:map <silent> <c-f7> :call GITLOG_ToggleWindows()<cr>
+<
+This will install GITLOG on the <f7> key.
+
+==============================================================================
+7. History                                       *gitlog-history*
+  2.1.2: May 21, 2013
+         PA: Fixed tree open.
+		 PA: Fixed being able to open in any default mode.
+		 PA: Made open tree view a bit better.
+
+  2.1.1: May 03, 2013
+         PA: Fixed silly start-up issue.
+
+  2.1.0: March 29, 2013
+         PA: Fixed empty directory issue.
+		 PA: Added 'refresh' functions for tree.
+
+  2.0.2: March 26, 2013
+         PA: Released wrong version and broke toggle and syntax.
+
+  2.0.0: March 26, 2013
+         PA: Added the Repository History Tree.
+		 PA: Also fixed minor issue with the branch selection being wrong.
+
+  1.3.1: March 8, 2013
+         PA: Fixed problem with marge branches not being diff'ed and fixed syntax
+		 highlighting to handle the branches.
+
+  1.3.0: January 8, 2013
+  		 PA: Re-wrote the way that the files were read so it works in console mode.
+
+  1.2.0: December 14, 2012
+         PA: Added repository search capability.
+		 PA: Added syntax highlighting.
+		 PA: Fixed the way that buffers are created to stop leaking buffers.
+		 PA: Fixed the way it closes buffers to stop it closing the editor.
+
+  1.1.2: December 12, 2012
+         PA: Fixed broken plugin. Order of parameter setting caused by the last fix,
+             broke the plugin. Also fixed problem with un-escaped branchname causing
+             git to not return list of changes.
+
+  1.1.1: November 21, 2012
+         PA: Fixed issue with not finding history if the editor was not launched
+             in the repository tree.
+
+  1.1.0: October 27, 2012:
+         PA: Added functionality to the branch window. Now selecting the branch
+
+  1.1.0: October 27, 2012:
+         PA: Added functionality to the branch window. Now selecting the branch
+             will update the log window to reflect the commits in that branch.
+
+         PA: Added the help file.
+
+  1.0.0: <some time in the past>
+         PA: Initial release.
+
+vim: ts=4 ft=help tw=78

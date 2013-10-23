@@ -23,17 +23,30 @@ set nocompatible
 set backspace=indent,eol,start
 
 set history=50		" keep 50 lines of command line history
-set ruler		" show the cursor position all the time
-set showcmd		" display incomplete commands
+set ruler		    " show the cursor position all the time
+set showcmd		    " display incomplete commands
 set incsearch		" do incremental searching
 
 
 set backupdir=~/.vim/backup
 set dir=~/.vim/temp
 
-set nu
-set ai
-set sm
+set number
+set autoindent
+set smartindent
+set showmatch
+set textwidth=78
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set smarttab
+" set iskeyword-=: " @,48-57,_,192-255
+set path+=lib/,/www/lib/
+set whichwrap+=<>
+	
+	
+" set sb
+" set spr
 
 if has("autocmd")
   filetype plugin indent on
@@ -47,10 +60,6 @@ if has("autocmd")
 
 endif
 
-set tabstop=4
-set shiftwidth=4
-set expandtab
-	
 
 if has('mouse')
   set mouse=a
@@ -61,12 +70,36 @@ set t_Co=256
 syntax on
 set hlsearch
 
+colors neverness
 
-" :colorscheme molokai
+" let g:kolor_bold=0
+" let g:kolor_italic=0
+" let g:kolor_alternative_matchparen=1
+" colors kolor
 "
-:colorscheme lucius
-:LuciusBlackHighContrast
+"
+":colorscheme seoul256
+" :color jellybeans
+" colors desertEx 
+
+" let g:rehash256=1
+" let g:molokai_original=1
+" :color molokai
+" set background=dark
+" colors peaksea
+
+
+" :colorscheme zarniwoop
+"
+" let g:lucius_style='dark'
+" :colorscheme lucius
+
+" :LuciusGrayHighContrast
 
 " :colorscheme xoria256
 
 let NERDTreeHijackNetrw=0
+
+execute pathogen#infect()
+nnoremap <silent> <F12> :TlistToggle<CR>
+
