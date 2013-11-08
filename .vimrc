@@ -72,6 +72,9 @@ set hlsearch
 
 colors neverness
 
+set cc=+1
+hi ColorColumn ctermbg=235
+
 " let g:kolor_bold=0
 " let g:kolor_italic=0
 " let g:kolor_alternative_matchparen=1
@@ -100,6 +103,6 @@ colors neverness
 
 let NERDTreeHijackNetrw=0
 
-execute pathogen#infect()
-nnoremap <silent> <F12> :TlistToggle<CR>
+" execute pathogen#infect()
+" nnoremap <silent> <F12> :TlistToggle<CR>
 
