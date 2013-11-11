@@ -70,36 +70,17 @@ set t_Co=256
 syntax on
 set hlsearch
 
-colors neverness
+" colors neverness
+colors lucius
+LuciusLightHighContrast
 
 set cc=+1
-hi ColorColumn ctermbg=235
+if &background == "dark" 
+    hi ColorColumn ctermbg=235
+else
+    hi ColorColumn ctermbg=254
+endif
 
-" let g:kolor_bold=0
-" let g:kolor_italic=0
-" let g:kolor_alternative_matchparen=1
-" colors kolor
-"
-"
-":colorscheme seoul256
-" :color jellybeans
-" colors desertEx 
-
-" let g:rehash256=1
-" let g:molokai_original=1
-" :color molokai
-" set background=dark
-" colors peaksea
-
-
-" :colorscheme zarniwoop
-"
-" let g:lucius_style='dark'
-" :colorscheme lucius
-
-" :LuciusGrayHighContrast
-
-" :colorscheme xoria256
 
 let NERDTreeHijackNetrw=0
 
