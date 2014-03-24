@@ -70,9 +70,10 @@ set t_Co=256
 syntax on
 set hlsearch
 
-" colors neverness
-colors lucius
-LuciusLightHighContrast
+" colors lucius
+" LuciusLightHighContrast
+
+colors neverness
 
 set cc=+1
 if &background == "dark" 

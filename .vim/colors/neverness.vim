@@ -12,6 +12,7 @@ endif
 
 let g:colors_name = 'neverness'
 
+
 " Comments: grey
 hi Comment        ctermfg=DarkCyan     guifg=#848484 guibg=#000000 gui=none 
 
@@ -24,17 +25,17 @@ hi Number         ctermfg=117          guifg=#87ceeb guibg=#000000 gui=none
 hi String         ctermfg=117          guifg=#87ceeb guibg=#000000 gui=none
 
 " Identifier: SteelBlue1
-hi Identifier     ctermfg=81     guifg=#63b8ff guibg=#000000 gui=none
-hi Function       ctermfg=81     guifg=#63b8ff guibg=#000000 gui=none
+hi Identifier     ctermfg=81  cterm=none   guifg=#63b8ff guibg=#000000 gui=none
+hi Function       ctermfg=81  cterm=none   guifg=#63b8ff guibg=#000000 gui=none
 
 " Statement: SteelBlue
-hi Conditional    ctermfg=67      guifg=#4682b4 guibg=#000000 gui=bold
-hi Exception      ctermfg=67      guifg=#4682b4 guibg=#000000 gui=bold
-hi Keyword        ctermfg=67      guifg=#4682b4 guibg=#000000 gui=bold
-hi Label          ctermfg=67      guifg=#4682b4 guibg=#000000 gui=bold
-hi Operator       ctermfg=67      guifg=#4682b4 guibg=#000000 gui=bold
-hi Repeat         ctermfg=67      guifg=#4682b4 guibg=#000000 gui=bold
-hi Statement      ctermfg=67      guifg=#4682b4 guibg=#000000 gui=bold
+hi Conditional    ctermfg=67  cterm=none    guifg=#4682b4 guibg=#000000 gui=bold
+hi Exception      ctermfg=67  cterm=none    guifg=#4682b4 guibg=#000000 gui=bold
+hi Keyword        ctermfg=67  cterm=none    guifg=#4682b4 guibg=#000000 gui=bold
+hi Label          ctermfg=67  cterm=none    guifg=#4682b4 guibg=#000000 gui=bold
+hi Operator       ctermfg=67  cterm=none    guifg=#4682b4 guibg=#000000 gui=bold
+hi Repeat         ctermfg=67  cterm=none    guifg=#4682b4 guibg=#000000 gui=bold
+hi Statement      ctermfg=67  cterm=none    guifg=#4682b4 guibg=#000000 gui=bold
 
 " PreProc: DarkOrchid1
 hi PreProc        ctermfg=133     guifg=#bf3eff guibg=#000000 gui=none
@@ -97,12 +98,12 @@ hi Directory      guifg=#e6fff3 guibg=#000000 gui=none
 hi ErrorMsg       guifg=#e6fff3 guibg=#61a181 gui=bold
 hi FoldColumn     guifg=#9bcfb5 guibg=#43705a gui=bold
 hi Folded         guifg=#9bcfb5 guibg=#43705a gui=bold
-hi IncSearch      guifg=#1d3026 guibg=#61a181 gui=bold
+hi IncSearch      ctermbg=16 guifg=#1d3026 guibg=#61a181 gui=bold
 hi ModeMsg        guifg=#4EEE94 guibg=#000000 gui=bold
 hi MoreMsg        guifg=#4EEE94 guibg=#000000 gui=bold
 hi NonText        guifg=#c0c0c0 guibg=#000000 gui=bold
 hi Question       guifg=#9bcfb5 guibg=#000000 gui=bold
-hi Search         guifg=#1d3026 guibg=#61a181 gui=bold
+hi Search         ctermbg=16 guifg=#2d3026 guibg=#61a181 gui=bold
 hi SpecialKey     guifg=#9bcfb5 guibg=#000000 gui=none
 "hi StatusLine     guifg=#e6fff3 guibg=#61a181 gui=bold
 "hi StatusLineNC   guifg=#1d3026 guibg=#61a181 gui=bold
