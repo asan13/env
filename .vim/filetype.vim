@@ -1,5 +1,3 @@
 " PostgreSQL
 au BufNewFile,BufRead *.psql                    setf psql 
-
-" Ragel
-au BufNewFile,BufRead *.rl                      setf ragel
+au BufNewFile,BufRead *.psgi                    setf perl

@@ -72,15 +72,16 @@ set hlsearch
 
 " colors lucius
 " LuciusLightHighContrast
-
-colors neverness
+color iceberg
+" colors neverness
 
 set cc=+1
-if &background == "dark" 
-    hi ColorColumn ctermbg=235
-else
-    hi ColorColumn ctermbg=254
-endif
+hi ColorColumn ctermbg=235
+" if &background == "dark" 
+"     hi ColorColumn ctermbg=235
+" else
+"     hi ColorColumn ctermbg=254
+" endif
 
 
 let NERDTreeHijackNetrw=0
