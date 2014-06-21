@@ -1,0 +1,94 @@
+#!/bin/sh
+
+
+
+BGUSER=box
+
+ACTION=${1:-'status'}
+[ "$ACTION" = "$1" ] && shift
+SOCK_PATH=/var/run/bulk_gate/sock
+
+start() {
+
+    procs=0
+
+    [ -e /var/run/bulk_gate/sock ] || {
+        mkdir -p /var/run/bulk_gate/sock || exit 1
+        chown -R $BGUSER:$BGUSER /var/run/bulk_gate
+        chmod a+w /var/run/bulk_gate/sock
+    }
+
+    
+
+    while [ $procs != $1 ]; 
+    do
+        procs=$(($procs + 1))
+        sock=$SOCK_PATH/front$procs
+
+        sudo -u $BGUSER twiggy --listen $sock $2 &
+
+
+        for i in 0.1 0.5 1.0; do
+            [ -e $sock ] || sleep $i;
+            chmod go+w $sock && break;
+        done;
+        
+        echo frontend $procs started
+    done;
+}
+
+
+
+status() {
+    ps aux | perl -n -e 'print $_ if /^.+?twiggy.+frontend.p.+$/'
+}
+
+get_pids() {
+    PIDS=$(ps aux | perl -n -e 'print " $1" if /\s+(\d+).+?twiggy.+frontend\.p.+$/')
+    ( [ "$PIDS" ] && return 0 ) || return 1
+}
+
+
+stop() {
+    get_pids 
+    [ "$PIDS" ] || {
+        echo Nothing stopped;
+        exit 0;
+    }
+
+    sudo kill $PIDS
+    get_pids && {
+        echo Force stop, kill SIGKILL $PIDS;
+        sudo kill -9 $PIDS;
+    }
+
+    sudo rm /var/run/bulk_gate/sock/front[1-9]
+    echo Frontends is stopped
+}
+
+if [ "$ACTION" ] && [ "$ACTION" != "status" ]; then
+    [ $(id -u) = $(id -u $BGUSER) ] || [ $(id -u)  = "0" ] || {
+        echo operation $ACTION is not permitted for $USER;
+        exit 1;
+    }
+fi
+
+
+case "$ACTION" in
+    start) 
+        start ${1:-3} ${2:-front.psgi}
+        ;;
+
+    stop)
+        stop
+        ;;
+#    restart)
+#        get_pids && stop
+#        start ${1:-3} ${2:-front.psgi}
+#        ;;
+    status|"")
+        status
+        ;;
+esac
+
+

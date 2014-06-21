@@ -1,0 +1,45 @@
+---
+
+bulk_gate:
+
+    connector: bulk_gate
+    sms_queue: bulk_gate_sms
+
+    host   : 10.10.0.13
+    dlr_url: http://10.10.0.13:5000/dlr.cgi?status=%d&to=%p
+
+    kannels:
+        fiona: http://l-4.aqq.me:43038/sm
+        amy:   http://a.aqq.me:43038/sm
+        bulk2: http://95.163.74.16:43038/sm
+
+    redirect: http://l-4.aqq.me:9000/send?user=mohtep&pass=SMSOnline
+
+    
+    back_urls:
+        1: http://dlr.sms-online.com/bulk
+        2: http://bulk-dlr.sms-online.com
+        a: http://dlr.sms-online.com/bulk
+        b: http://bulk-dlr.sms-online.com
+        c: http://10.10.0.13:5055
+
+    data:
+        prices : /data/bulk_gate/prices.yml
+        rates  : /data/lib/CBR/rates
+
+    service:
+        notify_name: bulk_reload
+        notify_period: 30
+
+
+daemon:
+    pid_file: '/tmp/bulk_gate.pid'
+    log_file: '/tmp/bulk_gate.log'
+
+    workers_number: 4
+
+log:
+    sys_logger: s.bulk_gate.service
+
+
+
