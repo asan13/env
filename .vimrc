@@ -70,16 +70,18 @@ set t_Co=256
 syntax on
 set hlsearch
 
+" colors lucius
+" LuciusLightHighContrast
+color iceberg
 " colors neverness
-colors lucius
-LuciusLightHighContrast
 
 set cc=+1
-if &background == "dark" 
-    hi ColorColumn ctermbg=235
-else
-    hi ColorColumn ctermbg=254
-endif
+hi ColorColumn ctermbg=235
+" if &background == "dark" 
+"     hi ColorColumn ctermbg=235
+" else
+"     hi ColorColumn ctermbg=254
+" endif
 
 
 let NERDTreeHijackNetrw=0

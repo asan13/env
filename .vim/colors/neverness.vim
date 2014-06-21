@@ -24,17 +24,17 @@ hi Number         ctermfg=117          guifg=#87ceeb guibg=#000000 gui=none
 hi String         ctermfg=117          guifg=#87ceeb guibg=#000000 gui=none
 
 " Identifier: SteelBlue1
-hi Identifier     ctermfg=81     guifg=#63b8ff guibg=#000000 gui=none
-hi Function       ctermfg=81     guifg=#63b8ff guibg=#000000 gui=none
+hi Identifier     ctermfg=81 cterm=none    guifg=#63b8ff guibg=#000000 gui=none
+hi Function       ctermfg=81 cterm=none    guifg=#63b8ff guibg=#000000 gui=none
 
 " Statement: SteelBlue
-hi Conditional    ctermfg=67      guifg=#4682b4 guibg=#000000 gui=bold
-hi Exception      ctermfg=67      guifg=#4682b4 guibg=#000000 gui=bold
-hi Keyword        ctermfg=67      guifg=#4682b4 guibg=#000000 gui=bold
-hi Label          ctermfg=67      guifg=#4682b4 guibg=#000000 gui=bold
-hi Operator       ctermfg=67      guifg=#4682b4 guibg=#000000 gui=bold
-hi Repeat         ctermfg=67      guifg=#4682b4 guibg=#000000 gui=bold
-hi Statement      ctermfg=67      guifg=#4682b4 guibg=#000000 gui=bold
+hi Conditional    ctermfg=67 cterm=none     guifg=#4682b4 guibg=#000000 gui=bold
+hi Exception      ctermfg=67 cterm=none     guifg=#4682b4 guibg=#000000 gui=bold
+hi Keyword        ctermfg=67 cterm=none     guifg=#4682b4 guibg=#000000 gui=bold
+hi Label          ctermfg=67 cterm=none     guifg=#4682b4 guibg=#000000 gui=bold
+hi Operator       ctermfg=67 cterm=none     guifg=#4682b4 guibg=#000000 gui=bold
+hi Repeat         ctermfg=67 cterm=none     guifg=#4682b4 guibg=#000000 gui=bold
+hi Statement      ctermfg=67 cterm=none     guifg=#4682b4 guibg=#000000 gui=bold
 
 " PreProc: DarkOrchid1
 hi PreProc        ctermfg=133     guifg=#bf3eff guibg=#000000 gui=none
