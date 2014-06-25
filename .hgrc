@@ -1,0 +1,7 @@
+[ui]
+username = Andrey Asyakin <asan999@gmail.com>
+ssh = ssh -C
+editor = vim
+ignore.global = ~/.hgconf/ignore/global
+
+

@@ -1,0 +1,6 @@
+syntax: glob
+
+blib/
+MYMETA.*
+dev/
+

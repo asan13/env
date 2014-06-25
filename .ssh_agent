@@ -1,0 +1,28 @@
+
+set SSH_ENV = "$HOME/.ssh_env"
+#set SSH_AUTH_SOCK = `sockstat -u | grep -m 1 -E "$USER.+ssh-agent" | cut -w -f 6`
+set PROC = ( `sockstat -u | grep -m 1 -E "$USER.+ssh-agent" | cut -w -f 3,6` )
+
+#if ( "x$SSH_AUTH_SOCK" == "x" ) then
+if ( "x$PROC" == "x" ) then
+    ssh-agent > $SSH_ENV
+    source $SSH_ENV
+else
+
+#    set SSH_AGENT_PID = `sockstat -u | grep -m 1 $SSH_AUTH_SOCK | cut -w -f 3`
+
+    set SSH_AGENT_PID = $PROC[1]
+    set SSH_AUTH_SOCK = $PROC[2]
+
+    set check
+    if ( -f $SSH_ENV ) then
+        set check = `grep $SSH_AUTH_SOCK $SSH_ENV`
+    endif
+    if ( "x$check" == "x" ) then
+        echo setenv SSH_AUTH_SOCK $SSH_AUTH_SOCK >  $SSH_ENV
+        echo setenv SSH_AGENT_PID $SSH_AGENT_PID >> $SSH_ENV
+    endif
+
+    source $SSH_ENV
+endif
+
