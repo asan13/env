@@ -11,7 +11,7 @@ BEGIN {
     -x $_ and $SVN = $_ and last for qw!/usr/bin/svn /usr/local/bin/svn!;
     $SVN || say 'svn not found' && exit 1;
     sub exec_svn() {
-        say "exec $SVN 'svn', @ARGV";
+        exec $SVN 'svn', @ARGV;
         Carp::croak "exec: $!";
     }
 }
