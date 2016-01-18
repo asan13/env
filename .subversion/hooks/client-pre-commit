@@ -4,9 +4,9 @@ SVN=/usr/bin/svn
 DIR=$1
 shift
 
-test "$1" = "commit" -a -d $PWD/.svn || exit 1
+test "$1" = "commit" -a -d $DIR/.svn || exit 1
 
-diffstr=$($SVN diff $DIR | perl -n -E 'if (/^\+\+\+\s+([^\s]+)/) { $file = $1; }; if ( /#.*?\btest\b/ ) { say $file if $file; $file = ""; say  }')
+diffstr=$($SVN diff $DIR | perl -n -E '$file = $1 if /^\+\+\+\s+([^\s]+)/; if ( /#.*?\btest\b/ ) { say $file if $file; $file = ""; say }')
 
 [ x"$diffstr" = "x" ] || {
     /bin/echo -e "\e[38;5;9m===>\e[0m"
