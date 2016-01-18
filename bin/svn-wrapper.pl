@@ -1,10 +1,12 @@
 #!/usr/bin/perl
-use common::sense;
+use strict;
+use warnings;
+use feature 'say';
 use Carp;
 use Cwd;
 
-my $SVN;
 BEGIN {
+    my $SVN;
     -x $_ and $SVN = $_ and last for qw!/usr/bin/svn /usr/local/bin/svn!;
     $SVN || say 'svn not found' && exit 1;
     sub exec_svn() {
@@ -49,11 +51,10 @@ sub repdir {
 
     my $exists_svn;
     while ($dir) {
-        $exists_svn = 1 and last if -d "$dir/.svn";
+        $exists_svn = 1, last if -d "$dir/.svn";
         $dir =~ s!/?[^/]*$!!;
     }
     return '' unless $exists_svn;
-    $dir = '.' unless $dir;
     return $dir;
 }
 
