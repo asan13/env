@@ -4,7 +4,10 @@ SVN=/usr/bin/svn
 DIR=$1
 shift
 
-test "$1" = "commit" -a -d $DIR/.svn || exit 1
+[ "$1" = "commit" ] || {
+    echo WARNING client-pre-commit call not for 'svn commit'
+    exit
+}
 
 diffstr=$($SVN diff $DIR | perl -n -E '$file = $1 if /^\Q+++\E\s+([^\s]+)/; if (/#.*?\btest\b/) { say($file), $file = "" if $file; say }')
 
