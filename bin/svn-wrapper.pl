@@ -2,7 +2,6 @@
 use strict;
 use warnings;
 use feature 'say';
-use Carp;
 use Cwd;
 use Getopt::Long;
 
@@ -12,27 +11,28 @@ BEGIN {
     $SVN || say 'svn not found' && exit 1;
     sub exec_svn() {
         exec $SVN 'svn', @ARGV;
-        Carp::croak "exec: $!";
+        die "exec: $!\n";
     }
 }
 
 exec_svn unless @ARGV;
 
-
-my $hooks_dir = "$ENV{HOME}/.subversion/hooks";
-exec_svn unless -d $hooks_dir;
-
 my $action = $ARGV[0];
-if ($action =~ /^(?:commit|ci)$/ && -x "$hooks_dir/client-pre-commit") {
-    my $argv = eval { parse_argv(@ARGV[1..@ARGV-1]) };
+if ($action =~ /^(?:commit|ci)$/) {
+    my $argv = eval { parse_commit_argv(@ARGV[1..@ARGV-1]) };
     exec_svn if $@;
+
+    my $hook = $argv->{'config-dir'} || "$ENV{HOME}/.subversion";
+    $hook =~ s!/$!!;
+    $hook .= '/hooks/client-pre-commit';
+    exec_svn unless -x $hook;
 
     my @files = @{ delete $argv->{_files} };
     my @hook_args;
     if ($argv->{'config-dir'}) {
         push @hook_args, '--config-dir' => $argv->{'config-dir'};
     }
-    my $st = system("$hooks_dir/client-pre-commit", @hook_args, @files);
+    my $st = system($hook, @hook_args, @files);
     if ($st != 0) {
         say 'client-pre-commit return error';
         exit;
@@ -41,7 +41,7 @@ if ($action =~ /^(?:commit|ci)$/ && -x "$hooks_dir/client-pre-commit") {
 
 exec_svn;
 
-sub parse_argv {
+sub parse_commit_argv {
     my @argv = @_;
     return unless @argv;
     my @opts;
