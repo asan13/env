@@ -1,14 +1,13 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use feature 'say';
 use Cwd;
 use Getopt::Long;
 
 BEGIN {
     my $SVN;
-    -x $_ and $SVN = $_ and last for qw!/usr/bin/svn /usr/local/bin/svn!;
-    $SVN || say 'svn not found' && exit 1;
+    -x $_ and $SVN = $_, last for qw!/usr/bin/svn /usr/local/bin/svn!;
+    $SVN || print "svn not found\n" && exit 1;
     sub exec_svn() {
         exec $SVN 'svn', @ARGV;
         die "exec: $!\n";
@@ -34,7 +33,7 @@ if ($action =~ /^(?:commit|ci)$/) {
     }
     my $st = system($hook, @hook_args, @files);
     if ($st != 0) {
-        say 'client-pre-commit return error';
+        print "client-pre-commit return error status\n";
         exit;
     }
 }
@@ -56,7 +55,7 @@ sub parse_commit_argv {
     Getopt::Long::GetOptionsFromArray(\@argv, \%flush, @opts) or die 42;
     if ($flush{targets}) {
         if ( open my $fh, '<', $flush{targets} ) {
-            while ($fh) {
+            while (<$fh>) {
                 push @argv, $_;
             }
             close $fh;
