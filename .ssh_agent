@@ -1,33 +1,31 @@
 
-set PROC = ( `sockstat -u | grep -m 1 -E "$USER.+ssh-agent" | cut -w -f 3,6` )
+# set PROC = ( `sockstat -u | grep -m 1 -E "$USER.+ssh-agent" | cut -w -f 3,6` )
+# 
+# if ( "x$PROC" == "x" ) then
+#     eval `ssh-agent`
+# else
+#     setenv SSH_AGENT_PID $PROC[1]
+#     setenv SSH_AUTH_SOCK $PROC[2]
+# endif
+# 
 
-if ( "x$PROC" == "x" ) then
+declare -a PIDS
+
+PIDS=( $(ps -e -o pid,ppid,args --sort -etime | grep -m 1 ssh-agent | grep -o -E '[0-9]+ +[0-9]+') )
+
+if [[ -z "${PIDS}" ]]; then
     eval `ssh-agent`
 else
-    setenv SSH_AGENT_PID $PROC[1]
-    setenv SSH_AUTH_SOCK $PROC[2]
-endif
+    SSH_AGENT_PID=${PIDS[0]}
+    AGENT_PPID=${PIDS[1]}
 
+    SSH_AUTH_SOCK=$( netstat -pl -A unix 2> /dev/null | grep -o -E "[^ ]+/agent\.$AGENT_PPID" )
 
-#set SSH_ENV = "$HOME/.ssh_env"
-#set PROC = ( `sockstat -u | grep -m 1 -E "$USER.+ssh-agent" | cut -w -f 3,6` )
+    if [[ -n "$SSH_AGENT_PID" && -n "$SSH_AUTH_SOCK" ]]; then
+        export SSH_AGENT_PID
+        export SSH_AUTH_SOCK
+    else
+        echo set ssh-agent: something wrong
+    fi
 
-#if ( "x$PROC" == "x" ) then
-#    ssh-agent > $SSH_ENV
-#    source $SSH_ENV
-#else
-#    set SSH_AGENT_PID = $PROC[1]
-#    set SSH_AUTH_SOCK = $PROC[2]
-#
-#    set check
-#    if ( -f $SSH_ENV ) then
-#        set check = `grep $SSH_AUTH_SOCK $SSH_ENV`
-#    endif
-#    if ( "x$check" == "x" ) then
-#        echo setenv SSH_AUTH_SOCK $SSH_AUTH_SOCK >  $SSH_ENV
-#        echo setenv SSH_AGENT_PID $SSH_AGENT_PID >> $SSH_ENV
-#    endif
-#
-#    source $SSH_ENV
-#endif
-
+fi

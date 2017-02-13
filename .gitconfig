@@ -1,29 +1,16 @@
-[core]
-    excludesfile = ~/.config/git/ignore
-
 [user]
-    name = Andrey Asyakin
-    email = asan999@gmail.com
+	name = asan999@gmail.com
+	email = asan999@gmail.com
+
 [color]
     ui = auto
 
 [diff]
     tool = vimdiff
-#[difftool]
-#    prompt = no
-
-[merge]
-    tool = vimdiff
-#[mergetool]
-#    prompt = no
-
-
 
 [alias]
-    st = status
-    hyst  = log --pretty=format:'%h %ad | %Cgreen%d%Creset %s [%Creset%C(yellow)%an%Creset] %C(cyan)(%ar)%Creset' --graph --date=short
-    mt = mergetool -y
-    dt = difftool  -y
-
-
+    st   = status
+    hy   = log --pretty=format:'%h %ad | %Cgreen%d%Creset %s [%Creset%C(yellow)%an%Creset] %C(cyan)(%ar)%Creset' --graph --date=short
+	br   = branch --column
+	dt   = difftool
 

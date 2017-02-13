@@ -1,0 +1,1 @@
+setxkbmap -layout us,ru -option -option grp:shift_caps_switch,grp_led:scroll
